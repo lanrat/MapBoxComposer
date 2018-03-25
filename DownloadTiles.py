@@ -2,8 +2,8 @@
 import os
 import time
 
-mapname = "submarine-cable-map-2013"
-ext = "png"
+mapname = "submarine-cable-map-2018"
+ext = "png24"
 
 def generateMakefile():
 	z = 6
