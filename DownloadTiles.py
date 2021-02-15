@@ -2,8 +2,9 @@
 import os
 import time
 
-mapname = "submarine-cable-map-2018"
-ext = "png24"
+urlbase = "https://tiles.telegeography.com/"
+mapname = "maps/global-internet-map-2021"
+ext = "png8"
 
 def generateMakefile():
 	z = 6
@@ -12,11 +13,11 @@ def generateMakefile():
 		os.system('mkdir -p ' + str(x))
 		for y in range(60 / 4):
 			y = y * 4;
-			download1 = ('http://a.tiles.telegeography.com/maps/'+ mapname +'/' + str(z) + '/' + str(x) + '/' + str(y    ) + '.' + ext + ' > ' + str(x) + '/' + str(y    ) + '.png') 
-			download2 = ('http://b.tiles.telegeography.com/maps/'+ mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 1) + '.' + ext + ' > ' + str(x) + '/' + str(y + 1) + '.png')
-			download3 = ('http://c.tiles.telegeography.com/maps/'+ mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 2) + '.' + ext + ' > ' + str(x) + '/' + str(y + 2) + '.png')
-			download4 = ('http://d.tiles.telegeography.com/maps/'+ mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 3) + '.' + ext + ' > ' + str(x) + '/' + str(y + 3) + '.png')
- 
+			download1 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y    ) + '.' + ext + ' > ' + str(x) + '/' + str(y    ) + '.png')
+			download2 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 1) + '.' + ext + ' > ' + str(x) + '/' + str(y + 1) + '.png')
+			download3 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 2) + '.' + ext + ' > ' + str(x) + '/' + str(y + 2) + '.png')
+			download4 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 3) + '.' + ext + ' > ' + str(x) + '/' + str(y + 3) + '.png')
+
 			downloadCmd = 'wget --user-agent="Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.3) Gecko/2008092416 Firefox/3.0.3" -O - '
 
 			print str(x) + '_' + str(y) + ':'
