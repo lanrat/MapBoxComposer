@@ -1,4 +1,3 @@
-*.pyc
 Makefile
-*.png
-*/*.png
+out/
+__pycache__
