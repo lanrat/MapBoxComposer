@@ -5,11 +5,11 @@ a MapBox created image.
 
 ## Running
 
-Edit `GenerateMakefile.py` with the corect endpoints using the variables at the top of the file.
+Edit `GenerateMakefile.py` with the correct endpoints using the variables at the top of the file.
 
 Then use it to generate a Makefile and run it!
 
 ```shell
-$ ./GenerateMakefile.py > Makefile
-$ make -k $NUM_CPU
+./GenerateMakefile.py > Makefile
+make -j NUM_CPU
 ```
