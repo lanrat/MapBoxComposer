@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 import os
 
-urlbase = "https://tiles.telegeography.com/maps/submarine-cable-map-2022"
-mapname = ""
+urlbase = "https://tiles.telegeography.com/maps/"
+mapName = "africa-map-2023"
 ext = "png"
 
-out = "out/2022-sub"
+out = "out/"+mapName
 
 def generateDownloadMakefile():
 	z = 6
@@ -15,10 +15,10 @@ def generateDownloadMakefile():
 		os.system('mkdir -p ' + out + '/'+str(x).zfill(2))
 		for y in range(int(60 / 4)):
 			y = y * 4;
-			download1 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y    ) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y    ).zfill(2) + '.png')
-			download2 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 1) + '.' + ext + ' > '+out+'/'+ str(x).zfill(2) + '/' + str(y + 1).zfill(2) + '.png')
-			download3 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 2) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y + 2).zfill(2) + '.png')
-			download4 = (urlbase + mapname +'/' + str(z) + '/' + str(x) + '/' + str(y + 3) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y + 3).zfill(2) + '.png')
+			download1 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y    ) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y    ).zfill(2) + '.png')
+			download2 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y + 1) + '.' + ext + ' > '+out+'/'+ str(x).zfill(2) + '/' + str(y + 1).zfill(2) + '.png')
+			download3 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y + 2) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y + 2).zfill(2) + '.png')
+			download4 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y + 3) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y + 3).zfill(2) + '.png')
 
 			downloadCmd = 'wget --no-verbose --user-agent="Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.3) Gecko/2008092416 Firefox/3.0.3" -O - '
 
