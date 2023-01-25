@@ -47,7 +47,7 @@ def generateDownloadMakefile():
 def generateStitchMakefile():
 	z = 6
 	vList = []
-	print('stitch: horizontal\n\n')
+	print('stitch: horizontal\n')
 
 	for x in range(64):
 		print('v_'+str(x).zfill(2)+':')
@@ -61,7 +61,7 @@ def generateStitchMakefile():
 	print('vertical: ' + v)
 
 	print('horizontal: vertical')
-	print("\tconvert "+out+"/*.png +append "+out+"/composite.png")
+	print("\tconvert "+out+"/*.png +append "+out+"/"+mapName+".png\n")
 
 
 if __name__ == '__main__':
