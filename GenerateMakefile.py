@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 
 urlbase = "https://tiles.telegeography.com/maps/"
-mapName = "africa-map-2023"
+mapName = "africa-map-2024"
 ext = "png"
 
 out = "out/"+mapName

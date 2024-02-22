@@ -13,3 +13,10 @@ Then use it to generate a Makefile and run it!
 ./GenerateMakefile.py > Makefile
 make -j NUM_CPU
 ```
+
+
+## resource limits errors
+
+edit (or temporarly remove) `/etc/ImageMagick-6/policy.xml` 
+
+or set env `MAGICK_CONFIGURE_PATH` to `/dev/null`
