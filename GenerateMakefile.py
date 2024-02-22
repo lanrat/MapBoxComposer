@@ -1,71 +1,68 @@
 #!/usr/bin/env python3
-import os
 
 urlbase = "https://tiles.telegeography.com/maps/"
-mapName = "africa-map-2024"
+mapName = "submarine-cable-map-2024"
 ext = "png"
 
 out = "out/"+mapName
 
+# max is non-inclusuve (uses python range())
+# check urls in browser to get range
+# url: z/x/y.png
+x_min = 0
+#x_min = 9 # 9 padding
+x_max = 64
+#x_max = 55
+
+y_max = 64
+
+z = 6
+
 def generateDownloadMakefile():
-	z = 6
 	allList = []
 
-	for x in range(64):
-		os.system('mkdir -p ' + out + '/'+str(x).zfill(2))
-		for y in range(int(60 / 4)):
-			y = y * 4;
-			download1 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y    ) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y    ).zfill(2) + '.png')
-			download2 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y + 1) + '.' + ext + ' > '+out+'/'+ str(x).zfill(2) + '/' + str(y + 1).zfill(2) + '.png')
-			download3 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y + 2) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y + 2).zfill(2) + '.png')
-			download4 = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y + 3) + '.' + ext + ' > '+out+'/' + str(x).zfill(2) + '/' + str(y + 3).zfill(2) + '.png')
+	downloadCmd='curl --fail --silent --show-error --create-dirs -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"'
 
-			downloadCmd = 'wget --no-verbose --user-agent="Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.3) Gecko/2008092416 Firefox/3.0.3" -O - '
+	for x in range(x_min, x_max):
+		for y in range(y_max):
+			folder=out+'/' + str(x).zfill(2)+'/'
+			file=folder+str(y    ).zfill(2) + '.'+ext
+			download = (urlbase + mapName +'/' + str(z) + '/' + str(x) + '/' + str(y    ) + '.' + ext)
 
-			print(str(x) + '_' + str(y) + ':')
-			print("\t" + downloadCmd + download1)
-			print(str(x) + '_' + str(y + 1) + ':')
-			print("\t" + downloadCmd + download2)
-			print(str(x) + '_' + str(y + 2) + ':')
-			print("\t" + downloadCmd + download3)
-			print(str(x) + '_' + str(y + 3) + ':')
-			print("\t" + downloadCmd + download4)
+			print(file + ':')
+			print("\t" + downloadCmd + " -o $@ " + download)
 
-			allList.append(str(x) + '_' + str(y))
-			allList.append(str(x) + '_' + str(y+1))
-			allList.append(str(x) + '_' + str(y+2))
-			allList.append(str(x) + '_' + str(y+3))
+			allList.append(file)
 
+	ret = ' '.join(allList)
+	print('download: ' + ret+"\n")
 
-			y = y / 4
-	ret = ''
-	for i in allList:
-		ret += i + " "
-
-	print('download: \t ' + ret)
 
 def generateStitchMakefile():
-	z = 6
 	vList = []
-	print('stitch: horizontal\n')
 
-	for x in range(64):
-		print('v_'+str(x).zfill(2)+':')
-		print("\t convert "+out +'/'+ str(x).zfill(2) + '/*.png -append '+out+'/' + str(x).zfill(2) + '.png')
-		vList.append('v_'+str(x).zfill(2))
-
-	v = ''
-	for i in vList:
-		v += i + " "
-
+	for x in range(x_min, x_max):
+		file=out+'/' + str(x).zfill(2) + '.png'
+		deps=' '.join([out+'/'+str(x).zfill(2)+'/'+str(y).zfill(2)+'.png' for y in range(y_max)])
+		print(file+': '+deps)
+		print("\t convert $^ -append $@")
+		vList.append(file)
+	
+	v = " ".join(vList)
 	print('vertical: ' + v)
 
-	print('horizontal: vertical')
-	print("\tconvert "+out+"/*.png +append "+out+"/"+mapName+".png\n")
+	hfile=out+"/"+mapName+".png"
+	
+	print('horizontal: '+hfile)
+	print(hfile+': '+v)
+	print("\tconvert $^ +append $@")
+
+	print('stitch: vertical horizontal')
 
 
 if __name__ == '__main__':
-	print('default: all\n\n')
-	print('all: download stitch')
+	print('.PHONY: all download stitch vertical horizontal')
+	print('default: all')
+	print('all: download stitch\n')
 	generateDownloadMakefile()
 	generateStitchMakefile()

@@ -14,7 +14,6 @@ Then use it to generate a Makefile and run it!
 make -j NUM_CPU
 ```
 
-
 ## resource limits errors
 
 edit (or temporarly remove) `/etc/ImageMagick-6/policy.xml` 
