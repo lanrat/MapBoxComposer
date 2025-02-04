@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 urlbase = "https://tiles.telegeography.com/maps/"
-mapName = "africa-map-2025"
+mapName = "submarine-cable-map-2025"
 ext = "png"
 
 out = "out/"+mapName
