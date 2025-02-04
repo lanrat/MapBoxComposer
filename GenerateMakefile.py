@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 urlbase = "https://tiles.telegeography.com/maps/"
-mapName = "submarine-cable-map-2024"
+mapName = "africa-map-2025"
 ext = "png"
 
 out = "out/"+mapName
 
-# max is non-inclusuve (uses python range())
+# max is non-inclusive (uses python range())
 # check urls in browser to get range
 # url: z/x/y.png
 x_min = 0
@@ -45,7 +45,7 @@ def generateStitchMakefile():
 		file=out+'/' + str(x).zfill(2) + '.png'
 		deps=' '.join([out+'/'+str(x).zfill(2)+'/'+str(y).zfill(2)+'.png' for y in range(y_max)])
 		print(file+': '+deps)
-		print("\t convert $^ -append $@")
+		print("\tconvert $^ -append $@")
 		vList.append(file)
 	
 	v = " ".join(vList)

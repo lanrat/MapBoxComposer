@@ -16,6 +16,6 @@ make -j NUM_CPU
 
 ## resource limits errors
 
-edit (or temporarly remove) `/etc/ImageMagick-6/policy.xml` 
+edit (or temporary remove) `/etc/ImageMagick-6/policy.xml` 
 
 or set env `MAGICK_CONFIGURE_PATH` to `/dev/null`
